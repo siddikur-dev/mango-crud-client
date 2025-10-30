@@ -20,7 +20,6 @@ const Users = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        // এখনই DELETE রিকোয়েস্ট যাবে
         fetch(`http://localhost:3000/users/${id}`, {
           method: "DELETE",
         })
@@ -90,8 +89,6 @@ const Users = () => {
           </table>
         );
       })}
-
-      {/* <div className="overflow-x-auto"></div> */}
     </div>
   );
 };

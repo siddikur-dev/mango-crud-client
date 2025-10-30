@@ -1,14 +1,46 @@
-import React from "react";
+import React, { use } from "react";
+import { AuthContext } from "../../Context/AuthContext";
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const { signInUser } = use(AuthContext);
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
+    // matched with firebase
+    signInUser(email, password)
+      .then((result) => {
+        const userUpdate = {
+          email,
+          creationTime: result.user?.metadata?.creationTime,
+          lastSignInTime: result.user?.metadata?.lastSignInTime,
+        };
+        // patch update serve to db
+        fetch("http://localhost:3000/users", {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userUpdate),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data));
+        // sweet alert2
 
-    console.log("Login Info:", { email, password });
-    form.reset();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "User has login",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
   };
 
   return (

@@ -1,6 +1,10 @@
 import React from "react";
 import { auth } from "../firebase/firebase.init";
-import { createUserWithEmailAndPassword, deleteUser } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  deleteUser,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { AuthContext } from "./AuthContext";
 
 const AuthProvider = ({ children }) => {
@@ -15,10 +19,10 @@ const AuthProvider = ({ children }) => {
   };
 
   // Sign In User
-  // const signInUser = (email, password) => {
-  //   setLoading(true);
-  //   return signInWithEmailAndPassword(auth, email, password);
-  // };
+  const signInUser = (email, password) => {
+    // setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
   //  Sign In With Google
   // const signInWithGoogle = () => {
@@ -53,7 +57,7 @@ const AuthProvider = ({ children }) => {
     // loading,
     createUser,
     deletedUser,
-    // signInUser,
+    signInUser,
     // signInWithGoogle,
     // signOutUser,
   };

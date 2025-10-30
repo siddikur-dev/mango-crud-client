@@ -11,13 +11,16 @@ const Register = () => {
 
     const formData = new FormData(form);
     const { email, password, ...restUser } = Object.fromEntries(formData);
-    const userProfile = {
-      ...restUser,
-      email,
-    };
+
     // main logic implement
     createUser(email, password)
       .then((result) => {
+        const userProfile = {
+          ...restUser,
+          email,
+          creationTime: result.user?.metadata?.creationTime,
+          lastSignInTime: result.user?.metadata?.lastSignInTime,
+        };
         //get user info from server to db
         fetch("http://localhost:3000/users", {
           method: "POST",

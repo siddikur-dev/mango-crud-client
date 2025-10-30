@@ -8,6 +8,7 @@ import MangoAddForm from "../../Component/Mangoes/MangoAddForm/MangoAddForm";
 import UpdateMango from "../../Component/Mangoes/UpdateMango/UpdateMango";
 import Login from "../../Page/Login/Login";
 import Register from "../../Page/Register/Register";
+import Users from "../../Component/Users/Users";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,12 @@ const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:3000/all-mango/${params.id}`),
         Component: UpdateMango,
+      },
+
+      {
+        path: "/users",
+        loader: () => fetch("http://localhost:3000/users"),
+        Component: Users,
       },
       {
         path: "/login",

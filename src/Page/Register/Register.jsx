@@ -7,13 +7,30 @@ const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
 
-    console.log("Login Info:", { email, password });
+    const formData = new FormData(form);
+    const { email, password, ...userProfile } = Object.fromEntries(formData);
+
+    console.log("Login Info:", { email, password, userProfile });
     // main logic implement
     createUser(email, password)
-      .then((result) => console.log(result.user))
+      .then((result) => {
+        //get user info from server to db
+        fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userProfile),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.insertedId) {
+              console.log("after save user db", data);
+              console.log(result.user);
+            }
+          });
+      })
       .catch((error) => console.log(error.message));
     form.reset();
   };
@@ -27,6 +44,18 @@ const Register = () => {
         <form onSubmit={handleRegister} className="space-y-4">
           <div>
             <label className="label">
+              <span className="label-text">Name</span>
+            </label>
+            <input
+              type="text"
+              name="Name"
+              placeholder="Enter your name"
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
+          <div>
+            <label className="label">
               <span className="label-text">Email</span>
             </label>
             <input
@@ -37,7 +66,42 @@ const Register = () => {
               required
             />
           </div>
-
+          <div>
+            <label className="label">
+              <span className="label-text">Number</span>
+            </label>
+            <input
+              type="number"
+              name="Number"
+              placeholder="Enter your email"
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
+          <div>
+            <label className="label">
+              <span className="label-text">Photo URL</span>
+            </label>
+            <input
+              type="text"
+              name="Photo URL"
+              placeholder="Enter your Photo URL"
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
+          <div>
+            <label className="label">
+              <span className="label-text">Address</span>
+            </label>
+            <input
+              type="text"
+              name="Address"
+              placeholder="Enter your Address"
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
           <div>
             <label className="label">
               <span className="label-text">Password</span>
@@ -50,7 +114,6 @@ const Register = () => {
               required
             />
           </div>
-
           <button type="submit" className="btn btn-primary w-full">
             Register
           </button>

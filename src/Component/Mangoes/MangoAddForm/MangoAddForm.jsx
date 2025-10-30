@@ -8,7 +8,7 @@ const MangoAddForm = () => {
     const formData = new FormData(form); // DOM থেকে সরাসরি data
     const newMango = Object.fromEntries(formData.entries());
 
-    fetch("http://localhost:3000/all-mango", {
+    fetch("https://mango-crud-server.vercel.app/all-mango", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newMango),

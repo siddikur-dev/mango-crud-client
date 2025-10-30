@@ -13,7 +13,7 @@ const UpdateMango = () => {
     console.log(updatedMango);
 
     // update to db
-    fetch(`http://localhost:3000/all-mango/${_id}`, {
+    fetch(`https://mango-crud-server.vercel.app/all-mango/${_id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

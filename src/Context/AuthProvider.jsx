@@ -3,18 +3,22 @@ import { auth } from "../firebase/firebase.init";
 import {
   createUserWithEmailAndPassword,
   deleteUser,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { AuthContext } from "./AuthContext";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const AuthProvider = ({ children }) => {
   // React State Declare For User
-  // const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
   //  Loading State Declare
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   // Create User
   const createUser = (email, password) => {
-    // setLoading(true);
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
@@ -31,10 +35,10 @@ const AuthProvider = ({ children }) => {
   // };
 
   // Sign Out User
-  // const signOutUser = () => {
-  //   setLoading(true);
-  //   return signOut(auth);
-  // };
+  const signOutUser = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
 
   // Delete User From Firebase
   const deletedUser = (user) => {
@@ -42,24 +46,24 @@ const AuthProvider = ({ children }) => {
   };
 
   // Auth State Change Use UseEffect
-  // useEffect(() => {
-  //   const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-  //     setUser(currentUser);
-  //     setLoading(false);
-  //   });
-  //   return () => {
-  //     unSubscribe();
-  //   };
-  // }, []);
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => {
+      unSubscribe();
+    };
+  }, []);
 
   const userInfo = {
-    // user,
-    // loading,
+    user,
+    loading,
     createUser,
     deletedUser,
     signInUser,
     // signInWithGoogle,
-    // signOutUser,
+    signOutUser,
   };
   return <AuthContext value={userInfo}>{children}</AuthContext>;
 };

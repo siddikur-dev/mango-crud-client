@@ -1,15 +1,33 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import ThemeToggle from "../../Ui/ThemeToggle/ThemeToggle";
+import { use } from "react";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
+  const navigate = useNavigate();
+  const { user, loading, signOutUser } = use(AuthContext);
+
+  if (loading) {
+    <p>loading... Nav</p>;
+  }
+
+  const handleLogOut = () => {
+    signOutUser()
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log("signout", error);
+      });
+  };
 
   return (
     <nav className="bg-base-300 shadow-md w-full ">
-      <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto lg:px-6 py-3 flex justify-between items-center">
         {/* Brand Logo / Name */}
         <h1 className="text-2xl font-bold text-primary tracking-wide">
           Mango Client
@@ -27,12 +45,18 @@ const Navbar = () => {
             to="/users"
             className="text-secondary transition duration-200 cursor-pointer"
           >
-            Users
+            All Users
           </NavLink>
           <ThemeToggle></ThemeToggle>
-          <Link to="/register" className="btn btn-primary ">
-            Register
-          </Link>
+          {user ? (
+            <button onClick={handleLogOut} className="btn btn-primary ">
+              Logout
+            </button>
+          ) : (
+            <Link to="/register" className="btn btn-primary ">
+              Register
+            </Link>
+          )}
         </ul>
 
         {/* Mobile Menu Button */}

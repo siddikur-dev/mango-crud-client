@@ -9,6 +9,7 @@ import UpdateMango from "../../Component/Mangoes/UpdateMango/UpdateMango";
 import Login from "../../Page/Login/Login";
 import Register from "../../Page/Register/Register";
 import Users from "../../Component/Users/Users";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -20,13 +21,13 @@ const router = createBrowserRouter([
       {
         index: true,
         path: "/",
-        loader: () => fetch("http://localhost:3000/all-mango"),
+        loader: () => fetch("https://mango-crud-server.vercel.app/all-mango"),
         Component: Home,
       },
       {
         path: "/all-mango/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/all-mango/${params.id}`),
+          fetch(`https://mango-crud-server.vercel.app/all-mango/${params.id}`),
         Component: MangoDetails,
       },
       {
@@ -36,14 +37,18 @@ const router = createBrowserRouter([
       {
         path: "/updateMango/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/all-mango/${params.id}`),
+          fetch(`https://mango-crud-server.vercel.app/all-mango/${params.id}`),
         Component: UpdateMango,
       },
 
       {
         path: "/users",
-        loader: () => fetch("http://localhost:3000/users"),
-        Component: Users,
+        loader: () => fetch("https://mango-crud-server.vercel.app/users"),
+        element: (
+          <PrivateRoute>
+            <Users />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",

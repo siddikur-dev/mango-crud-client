@@ -20,7 +20,7 @@ const AllMango = () => {
     }).then((result) => {
       console.log(result.isConfirmed);
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/all-mango/${id}`, {
+        fetch(`https://mango-crud-server.vercel.app/all-mango/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

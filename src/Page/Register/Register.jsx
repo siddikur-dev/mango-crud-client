@@ -22,7 +22,7 @@ const Register = () => {
           lastSignInTime: result.user?.metadata?.lastSignInTime,
         };
         //get user info from server to db
-        fetch("http://localhost:3000/users", {
+        fetch("https://mango-crud-server.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",

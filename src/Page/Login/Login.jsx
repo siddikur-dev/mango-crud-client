@@ -1,9 +1,12 @@
 import React, { use } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
+import { useLocation, useNavigate } from "react-router";
 
 const Login = () => {
   const { signInUser } = use(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -18,7 +21,7 @@ const Login = () => {
           lastSignInTime: result.user?.metadata?.lastSignInTime,
         };
         // patch update serve to db
-        fetch("http://localhost:3000/users", {
+        fetch("https://mango-crud-server.vercel.app/users", {
           method: "PATCH",
           headers: {
             "content-type": "application/json",
@@ -28,6 +31,8 @@ const Login = () => {
           .then((res) => res.json())
           .then((data) => console.log(data));
         // sweet alert2
+
+        navigate(location.state || "/");
 
         Swal.fire({
           position: "center",

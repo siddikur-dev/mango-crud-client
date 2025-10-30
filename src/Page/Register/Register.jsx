@@ -1,6 +1,7 @@
 import React, { use } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const { createUser } = use(AuthContext);
@@ -9,9 +10,11 @@ const Register = () => {
     const form = e.target;
 
     const formData = new FormData(form);
-    const { email, password, ...userProfile } = Object.fromEntries(formData);
-
-    console.log("Login Info:", { email, password, userProfile });
+    const { email, password, ...restUser } = Object.fromEntries(formData);
+    const userProfile = {
+      ...restUser,
+      email,
+    };
     // main logic implement
     createUser(email, password)
       .then((result) => {
@@ -27,7 +30,13 @@ const Register = () => {
           .then((data) => {
             if (data.insertedId) {
               console.log("after save user db", data);
-              console.log(result.user);
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "User has Created",
+                showConfirmButton: false,
+                timer: 1500,
+              });
             }
           });
       })

@@ -23,8 +23,11 @@ const Navbar = () => {
           <NavLink className="text-secondary transition duration-200 cursor-pointer">
             About
           </NavLink>
-          <NavLink className="text-secondary transition duration-200 cursor-pointer">
-            Items
+          <NavLink
+            to="/users"
+            className="text-secondary transition duration-200 cursor-pointer"
+          >
+            Users
           </NavLink>
           <ThemeToggle></ThemeToggle>
           <Link to="/register" className="btn btn-primary ">

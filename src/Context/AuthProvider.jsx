@@ -1,52 +1,54 @@
-import React, { createContext } from "react";
+import React from "react";
+import { auth } from "../firebase/firebase.init";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { AuthContext } from "./AuthContext";
 
-export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   // React State Declare For User
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   //  Loading State Declare
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   // Create User
   const createUser = (email, password) => {
-    setLoading(true);
+    // setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
   // Sign In User
-  const signInUser = (email, password) => {
-    setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
-  };
+  // const signInUser = (email, password) => {
+  //   setLoading(true);
+  //   return signInWithEmailAndPassword(auth, email, password);
+  // };
 
   //  Sign In With Google
-  const signInWithGoogle = () => {
-    setLoading(true);
-    signInWithPopup(auth, googleProvider);
-  };
+  // const signInWithGoogle = () => {
+  //   setLoading(true);
+  //   signInWithPopup(auth, googleProvider);
+  // };
 
   // Sign Out User
-  const signOutUser = () => {
-    setLoading(true);
-    return signOut(auth);
-  };
+  // const signOutUser = () => {
+  //   setLoading(true);
+  //   return signOut(auth);
+  // };
 
   // Auth State Change Use UseEffect
-  useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-    return () => {
-      unSubscribe();
-    };
-  }, []);
+  // useEffect(() => {
+  //   const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     setUser(currentUser);
+  //     setLoading(false);
+  //   });
+  //   return () => {
+  //     unSubscribe();
+  //   };
+  // }, []);
 
   const userInfo = {
-    user,
-    loading,
+    // user,
+    // loading,
     createUser,
-    signInUser,
-    signInWithGoogle,
-    signOutUser,
+    // signInUser,
+    // signInWithGoogle,
+    // signOutUser,
   };
   return <AuthContext value={userInfo}>{children}</AuthContext>;
 };

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import ThemeToggle from "../../Ui/ThemeToggle/ThemeToggle";
 
 const Navbar = () => {
@@ -16,7 +16,7 @@ const Navbar = () => {
         </h1>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-8 text-gray-700 font-medium">
+        <ul className="hidden md:flex space-x-8 text-gray-700 font-medium items-center">
           <NavLink className="text-secondary transition duration-200 cursor-pointer">
             Home
           </NavLink>
@@ -27,6 +27,9 @@ const Navbar = () => {
             Items
           </NavLink>
           <ThemeToggle></ThemeToggle>
+          <Link to="/register" className="btn btn-primary ">
+            Register
+          </Link>
         </ul>
 
         {/* Mobile Menu Button */}
